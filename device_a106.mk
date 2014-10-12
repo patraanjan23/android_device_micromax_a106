@@ -15,7 +15,17 @@ else
 endif
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_KERNEL):kernel
+    $(LOCAL_KERNEL):kernel \
+    $(LOCAL_PATH)/recovery/default.prop:root/default.prop \
+    $(LOCAL_PATH)/recovery/factory_init.project.rc:root/factory_init.project.rc \
+    $(LOCAL_PATH)/recovery/factory_init.rc:root/factory_init.rc \
+    $(LOCAL_PATH)/recovery/meta_init.modem.rc:root/meta_init.modem.rc \
+    $(LOCAL_PATH)/recovery/meta_init.project.rc:root/meta_init.project.rc \
+    $(LOCAL_PATH)/recovery/meta_init.rc:root/meta_init.rc \
+    $(LOCAL_PATH)/recovery/ueventd.rc:root/ueventd.rc \
+    $(LOCAL_PATH)/recovery/file_contexts:root/file_contexts \
+    $(LOCAL_PATH)/recovery/seapp_contexts:root/seapp_contexts \
+    $(LOCAL_PATH)/recovery/property_contexts:root/property_contexts
 
 $(call inherit-product, build/target/product/full.mk)
 
