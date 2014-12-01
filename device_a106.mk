@@ -16,16 +16,28 @@ endif
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel \
+
+#rootfs
+PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/default.prop:root/default.prop \
+    $(LOCAL_PATH)/recovery/fstab:root/fstab \
+    $(LOCAL_PATH)/recovery/fstab.fat.nand:root/fstab.fat.nand \
+    $(LOCAL_PATH)/recovery/fstab.nand:root/fstab.nand \
     $(LOCAL_PATH)/recovery/factory_init.project.rc:root/factory_init.project.rc \
     $(LOCAL_PATH)/recovery/factory_init.rc:root/factory_init.rc \
     $(LOCAL_PATH)/recovery/meta_init.modem.rc:root/meta_init.modem.rc \
     $(LOCAL_PATH)/recovery/meta_init.project.rc:root/meta_init.project.rc \
     $(LOCAL_PATH)/recovery/meta_init.rc:root/meta_init.rc \
-    $(LOCAL_PATH)/recovery/ueventd.rc:root/ueventd.rc \
+    $(LOCAL_PATH)/recovery/ueventd.rc:root/ueventd.rc
+
+#SELinux
+PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/file_contexts:root/file_contexts \
     $(LOCAL_PATH)/recovery/seapp_contexts:root/seapp_contexts \
     $(LOCAL_PATH)/recovery/property_contexts:root/property_contexts
+
+#twrp
+#PRODUCT_COPY_FILES += $(LOCAL_PATH)/recovery/twrp.fstab:recovery/root/etc/twrp.fstab
 
 $(call inherit-product, build/target/product/full.mk)
 

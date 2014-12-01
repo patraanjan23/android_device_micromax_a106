@@ -4,11 +4,12 @@
 # specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
 /dev/bootimg            /boot               emmc      defaults          			defaults
 /dev/recovery           /recovery           emmc      defaults                                defaults
-/dev/block/mmcblk0p5    /system             ext4      ro,noatime                              wait
-/dev/block/mmcblk0p6    /cache              ext4      noatime,nosuid,nodev,noauto_da_alloc    wait
-/dev/block/mmcblk0p7    /data               ext4      noatime,nosuid,nodev,noauto_da_alloc    wait,check,encryptable=footer
 /dev/block/mmcblk0p2    /protect_f          ext4      noatime,nosuid,nodev,noauto_da_alloc    wait,check
 /dev/block/mmcblk0p3    /protect_s          ext4      noatime,nosuid,nodev,noauto_da_alloc    wait,check
+/emmc@android           /system             ext4      ro,noatime                              wait
+/emmc@cache             /cache              ext4      noatime,nosuid,nodev,noauto_da_alloc    wait
+/emmc@usrdata           /data               ext4      noatime,nosuid,nodev,noauto_da_alloc    wait,check,encryptable=footer
+
 
 # cwm hack: access /storage/sdcard0 through emmc to find cmupdater directory
 #/dev/block/mmcblk0p8 /emmc            vfat      defaults                                recoveryonly
