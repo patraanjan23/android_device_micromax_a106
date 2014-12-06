@@ -19,16 +19,8 @@ PRODUCT_COPY_FILES += \
 
 #rootfs
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/recovery/default.prop:root/default.prop \
     $(LOCAL_PATH)/recovery/fstab:root/fstab \
-    $(LOCAL_PATH)/recovery/fstab.fat.nand:root/fstab.fat.nand \
-    $(LOCAL_PATH)/recovery/fstab.nand:root/fstab.nand \
-    $(LOCAL_PATH)/recovery/factory_init.project.rc:root/factory_init.project.rc \
-    $(LOCAL_PATH)/recovery/factory_init.rc:root/factory_init.rc \
-    $(LOCAL_PATH)/recovery/meta_init.modem.rc:root/meta_init.modem.rc \
-    $(LOCAL_PATH)/recovery/meta_init.project.rc:root/meta_init.project.rc \
-    $(LOCAL_PATH)/recovery/meta_init.rc:root/meta_init.rc \
-    $(LOCAL_PATH)/recovery/ueventd.rc:root/ueventd.rc
+    $(LOCAL_PATH)/recovery/fstab.mt6582:root/fstab.mt6582
 
 #SELinux
 PRODUCT_COPY_FILES += \
@@ -39,8 +31,24 @@ PRODUCT_COPY_FILES += \
 #twrp
 #PRODUCT_COPY_FILES += $(LOCAL_PATH)/recovery/twrp.fstab:recovery/root/etc/twrp.fstab
 
-$(call inherit-product, build/target/product/full.mk)
-
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := full_a106
 PRODUCT_DEVICE := a106
+
+PRODUCT_COPY_FILES_OVERRIDES += \
+    root/fstab.goldfish \
+    root/init.goldfish.rc \
+    recovery/root/fstab.goldfish
+
+
+ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=0 \
+ro.allow.mock.location=1 \
+persist.mtk.aee.aed=on \
+ro.debuggable=1 \
+persist.service.acm.enable=0 \
+persist.sys.usb.config=mass_storage \
+ro.bootloader.mode=download \
+ro.mount.fs=EXT4 \
+ro.persist.partition.support=no
+
+$(call inherit-product, build/target/product/full.mk)
