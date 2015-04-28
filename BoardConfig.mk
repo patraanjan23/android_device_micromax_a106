@@ -5,17 +5,30 @@ USE_CAMERA_STUB := true
 -include vendor/micromax/a106/BoardConfigVendor.mk
 
 #board info
-TARGET_ARCH := arm
-TARGET_NO_BOOTLOADER := true
-TARGET_NO_FACTORYIMAGE := true
 TARGET_BOARD_PLATFORM := mt6582
+TARGET_ARCH := arm
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := cortex-a7
 TARGET_CPU_SMP := true
 ARCH_ARM_HAVE_TLS_REGISTER := true
+
+#boot
+TARGET_NO_BOOTLOADER := true
 TARGET_BOOTLOADER_BOARD_NAME := a106
+TARGET_NO_FACTORYIMAGE := true
+BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/boot.mk
+
+#blob hacks
+COMMON_GLOBAL_CFLAGS += -DDISABLE_HW_ID_MATCH_CHECK
+TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
+
+# BT
+BOARD_HAVE_BLUETOOTH := true
+BOARD_HAVE_BLUETOOTH_MTK := true
+BOARD_BLUETOOTH_DOES_NOT_USE_RFKILL := true
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/micromax/a106/bluetooth
 
 #kernel
 BOARD_KERNEL_CMDLINE :=
@@ -40,10 +53,7 @@ BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 -
 TARGET_RECOVERY_INITRC := $(LOCAL_PATH)/recovery/recovery.rc
 TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/recovery/fstab.mt6582
 TARGET_PREBUILT_RECOVERY_KERNEL := $(LOCAL_PATH)/kernel
-
-BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/boot.mk
 BOARD_HAS_NO_SELECT_BUTTON := true
-TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_mass_storage/lun%d/file"
 
 #patches from C3C0
 #CWM_EMMC_BOOT_DEVICE_NAME := /dev/bootimg
@@ -53,12 +63,47 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_
 #CWM_EMMC_UBOOT_DEVICE_NAME := /dev/uboot
 #CWM_EMMC_UBOOT_DEVICE_SIZE := 0x00060000
 
+#flipped screen
+BOARD_HAS_FLIPPED_SCREEN := true
+
 #neon cflags for cortex-a7
-#TARGET_GLOBAL_CFLAGS   += -mcpu=cortex-a7 -mfpu=neon -mfloat-abi=softfp
-#TARGET_GLOBAL_CPPFLAGS += -mcpu=cortex-a7 -mfpu=neon -mfloat-abi=softfp
+TARGET_GLOBAL_CFLAGS   += -mcpu=cortex-a7 -mfpu=neon -mfloat-abi=softfp
+TARGET_GLOBAL_CPPFLAGS += -mcpu=cortex-a7 -mfpu=neon -mfloat-abi=softfp
 
 #user image is ext4
 TARGET_USERIMAGES_USE_EXT4:=true
+
+# EGL settings
+BOARD_EGL_CFG := device/micromax/a106/egl.cfg
+USE_OPENGL_RENDERER := true
+BOARD_EGL_WORKAROUND_BUG_10194508 := true
+
+# wifi
+WPA_SUPPLICANT_VERSION := VER_0_8_X
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+BOARD_HOSTAPD_DRIVER := NL80211
+BOARD_WLAN_DEVICE := mediatek
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_mt66xx
+BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_mt66xx
+WIFI_DRIVER_FW_PATH_PARAM:="/dev/wmtWifi"
+WIFI_DRIVER_FW_PATH_STA:=STA
+WIFI_DRIVER_FW_PATH_AP:=AP
+WIFI_DRIVER_FW_PATH_P2P:=P2P
+
+# Allow more than one lun file
+TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_mass_storage/lun%d/file"
+#TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/mt_usb/musb-hdrc.0/gadget/lun%d/file"
+
+
+
+
+###########
+#Carliv3.3#
+###########
+RECOVERY_VARIANT := carliv
+BOARD_HAS_MTK:=true
+BOARD_NEEDS_MTK_GETSIZE := true
+DEVICE_RESOLUTION := 480x800
 
 #######
 #philz#
@@ -66,7 +111,8 @@ TARGET_USERIMAGES_USE_EXT4:=true
 #BOARD_USE_MTK_LAYOUT := true
 #BOARD_MTK_BOOT_LABEL := "/bootimg"
 #BRIGHTNESS_SYS_FILE := "/sys/class/leds/lcd-backlight/brightness"
-
+#TARGET_SCREEN_HEIGHT := 800
+#TARGET_SCREEN_WIDTH := 480
 
 
 ########################

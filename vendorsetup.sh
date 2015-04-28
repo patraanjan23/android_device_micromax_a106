@@ -1,0 +1,1 @@
+add_lunch_combo full_a106-userdebug

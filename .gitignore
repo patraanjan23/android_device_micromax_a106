@@ -1,0 +1,9 @@
+*.mk~
+*.txt~
+*.sh~
+*.fstab~
+*.rc~
+*.mt6582~
+*.prop~
+*.gitignore~
+*~

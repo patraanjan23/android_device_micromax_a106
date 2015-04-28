@@ -15,12 +15,17 @@ else
 endif
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_KERNEL):kernel \
+    $(LOCAL_KERNEL):kernel
 
 #rootfs
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/fstab:root/fstab \
-    $(LOCAL_PATH)/recovery/fstab.mt6582:root/fstab.mt6582
+    $(LOCAL_PATH)/recovery/fstab.mt6582:root/fstab.mt6582 \
+    $(LOCAL_PATH)/root/ueventd.mt6582.rc:root/ueventd.mt6582.rc \
+    $(LOCAL_PATH)/root/init.mt6582.rc:root/init.mt6582.rc \
+    $(LOCAL_PATH)/root/init.modem.rc:root/init.modem.rc \
+    $(LOCAL_PATH)/root/init.protect.rc:root/init.protect.rc \
+    $(LOCAL_PATH)/root/init.mt6582.usb.rc:/root/init.mt6582.usb.rc
 
 #SELinux
 PRODUCT_COPY_FILES += \
@@ -35,10 +40,18 @@ PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := full_a106
 PRODUCT_DEVICE := a106
 
+# wifi
+PRODUCT_PACKAGES += \
+	lib_driver_cmd_mtk \
+	gralloc.mt6582
+
+PRODUCT_TAGS += dalvik.gc.type-precise
+
 PRODUCT_COPY_FILES_OVERRIDES += \
     root/fstab.goldfish \
     root/init.goldfish.rc \
-    recovery/root/fstab.goldfish
+    recovery/root/fstab.goldfish \
+    root/ueventd.goldfish.rc
 
 
 ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=0 \
